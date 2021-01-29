@@ -1,0 +1,20 @@
+Introduce an arm-none-elf-eabi variant
+
+This variant will have libgcc compiled as PIC and provide the crtstuff in a PIC
+variant too. Effectively it can be used to create (static) position independent
+executables on these platforms too.
+
+diff -Nurp pristine/libgcc/config.host workspace/libgcc/config.host
+--- pristine/libgcc/config.host	2019-01-17 13:29:13.000000000 +0100
++++ workspace/libgcc/config.host	2021-01-13 09:09:34.030225086 +0100
+@@ -462,6 +462,10 @@ arm*-*-eabi* | arm*-*-symbianelf* | arm*
+ 	tmake_file="${tmake_file} arm/t-arm arm/t-elf t-fixedpoint-gnu-prefix"
+ 	tm_file="$tm_file arm/bpabi-lib.h"
+ 	case ${host} in
++	arm*-*-elf-eabi*)
++	  tmake_file="${tmake_file} arm/t-bpabi t-crtfm t-crtstuff-pic t-libgcc-pic"
++	  extra_parts="crtbegin.o crtbeginS.o crtend.o crtendS.o crti.o crtn.o"
++	  ;;
+ 	arm*-*-eabi* | arm*-*-rtems*)
+ 	  tmake_file="${tmake_file} arm/t-bpabi t-crtfm"
+ 	  extra_parts="crtbegin.o crtend.o crti.o crtn.o"

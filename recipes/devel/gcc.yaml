@@ -25,7 +25,8 @@ checkoutSCM:
 checkoutDeterministic: True
 checkoutScript: |
     patchApplySeries -p1 \
-        $<<gcc/0001-squash-multilib-libdir-suffix.patch>>
+        $<<gcc/0001-squash-multilib-libdir-suffix.patch>> \
+        $<<gcc/0002-arm-none-pic.patch>>
 
 buildTools: [host-toolchain]
 buildVars: [AUTOCONF_BUILD, AUTOCONF_HOST, AUTOCONF_TARGET,
@@ -157,16 +158,20 @@ multiPackage:
         buildVars: [GCC_LIBC, GCC_ENABLE_LANGUAGES]
         buildScript: |
             if [[ -z "${GCC_MULTILIB:-}" ]] ; then
-                MULTILIB=--disable-multilib
+                OPTIONS=("--disable-multilib")
             else
-                MULTILIB="--with-multilib-list=$GCC_MULTILIB"
+                OPTIONS=("--with-multilib-list=$GCC_MULTILIB")
+            fi
+
+            if [[ "$GCC_LIBC" = newlib ]] ; then
+                OPTIONS+=("--with-newlib")
             fi
 
             buildGcc \
                 --with-sysroot=/usr/sysroots/${AUTOCONF_TARGET} \
                 --with-build-sysroot=${BOB_DEP_PATHS[libs::${GCC_LIBC}-dev]} \
                 --enable-linker-build-id                                    \
-                "$MULTILIB"                                                 \
+                "${OPTIONS[@]}"                                             \
                 --enable-languages="${GCC_ENABLE_LANGUAGES:-c,c++}"
             cp -a ${BOB_DEP_PATHS[devel::binutils]}/* install/
 
