@@ -1,0 +1,20 @@
+inherit: [ "basement::rootrecipe" ]
+
+depends:
+    - name: devel::cross-toolchain
+      environment:
+        AUTOCONF_TARGET: "arm-none-elf-eabi"
+        ARCH: "arm"
+        GCC_TARGET_ARCH: "armv8-r"
+        GCC_LIBC: "newlib"
+    #- name: devel::cross-toolchain
+    #  environment:
+    #    AUTOCONF_TARGET: "arm-none-uclinuxfdpiceabi"
+    #    ARCH: "arm"
+    #    GCC_TARGET_ARCH: "armv8-r"
+    #    GCC_LIBC: "uclibc-ng"
+
+buildScript: |
+  true
+packageScript: |
+  true
