@@ -1,0 +1,18 @@
+Given the absolute paths of all objects the command line length might overflow.
+Dumpt the argument list to a file and source it from there.
+
+--- a/Makerules	2020-12-26 19:04:49.000000000 +0100
++++ b/Makerules	2021-02-02 16:04:38.082928983 +0100
+@@ -273,7 +273,11 @@
+ cmd_compile-m = $(CC) $^ -c -o $@ $(CFLAGS) $(CFLAGS-$(suffix $@)) $(CFLAGS-$(notdir $(@D))) $(CFLAGS-$(notdir $@)) $(sort $(foreach d,$(^:$(top_srcdir)=),$(collect_multi_flags)))
+ cmd_strip     = $(STRIPTOOL) $(STRIP_FLAGS) $^
+ cmd_t_strip   = $(STRIPTOOL) $(STRIP_FLAGS) $@
+-cmd_ar        = $(AR) $(ARFLAGS) $@ $(call objects_with_syms,,$^)
++define cmd_ar
++	$(file >$@.in,$(call objects_with_syms,,$^))
++	$(AR) $(ARFLAGS) $@ @$@.in
++	@rm $@.in
++endef
+ 
+ define do_ln
+ 	@$(disp_ln)

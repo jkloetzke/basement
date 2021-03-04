@@ -1,0 +1,52 @@
+inherit: [make]
+
+depends:
+    - kernel::linux-libc-headers
+    -
+        name: devel::gcc-cross-bare
+        use: [tools]
+
+metaEnvironment:
+    PKG_VERSION: "1.0.37"
+
+checkoutSCM:
+    scm: url
+    url: https://downloads.uclibc-ng.org/releases/${PKG_VERSION}/uClibc-ng-${PKG_VERSION}.tar.xz
+    digestSHA256: "b2b815d20645cf604b99728202bf3ecb62507ce39dfa647884b4453caf86212c"
+    stripComponents: 1
+
+buildVars: [ARCH, CROSS_COMPILE, AUTOCONF_TARGET]
+buildTools: [host-toolchain, target-toolchain]
+buildScript: |
+    mkdir -p build install
+
+    pushd build
+    cat >.config <<EOF
+    TARGET_arm=y
+    CONFIG_ARM_EABI=y
+    ARCH_USE_MMU=n
+    ARCH_WANTS_LITTLE_ENDIAN=y
+    KERNEL_HEADERS="$2/usr/include"
+    RUNTIME_PREFIX="/"
+    DEVEL_PREFIX="/usr"
+    UCLIBC_HAS_THREADS_NATIVE=y
+    DO_C99_MATH=y
+    EOF
+
+    makeSequential -C "$1" O="$PWD" olddefconfig
+    makeParallel -C "$1" O="$PWD"
+    makeSequential -C "$1" O="$PWD" install DESTDIR="$PWD/../install"
+    popd
+
+    cp -a $2/usr/include install/usr/
+
+multiPackage:
+    dev:
+        packageScript: |
+            cp -a $1/install/* .
+
+    tgt:
+        packageScript: |
+            cp -a $1/install/lib .
+
+
