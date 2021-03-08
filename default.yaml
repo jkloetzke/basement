@@ -42,6 +42,23 @@ environment:
     CXXFLAGS:   "-Os -pipe -fPIC"
     LDFLAGS:    "-Wl,-O1 -Wl,--hash-style=gnu"
 
+    HOST_AR: "ar"
+    HOST_AS: "as"
+    HOST_CC: "gcc"
+    HOST_CPP: "cpp"
+    HOST_CXX: "g++"
+    HOST_GDB: "gdb"
+    HOST_LD: "ld"
+    HOST_NM: "nm"
+    HOST_OBJCOPY: "objcopy"
+    HOST_OBJDUMP: "objdump"
+    HOST_RANLIB: "ranlib"
+    HOST_STRIP: "strip"
+
+    HOST_CFLAGS:     "-Os -pipe -fPIC"
+    HOST_CXXFLAGS:   "-Os -pipe -fPIC"
+    HOST_LDFLAGS:    "-Wl,-O1 -Wl,--hash-style=gnu"
+
 archive:
     backend: http
     url: http://ci.bobbuildtool.dev/artifacts/

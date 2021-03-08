@@ -71,4 +71,7 @@ provideSandbox:
     mount:
         - "/etc/resolv.conf"
         - "/dev/pts"
-
+    environment:
+        ARCH:           "$ARCH"
+        AUTOCONF_BUILD: "$AUTOCONF_HOST"
+        AUTOCONF_HOST:  "$AUTOCONF_HOST"
