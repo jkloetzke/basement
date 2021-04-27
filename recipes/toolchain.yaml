@@ -1,6 +1,12 @@
 inherit: [ "basement::rootrecipe" ]
 
 depends:
+    #- name: devel::cross-toolchain
+    #  environment:
+    #    AUTOCONF_TARGET: "arm-none-elf-eabi"
+    #    ARCH: "arm"
+    #    GCC_TARGET_ARCH: "armv8-r"
+    #    GCC_LIBC: "newlib"
     - name: devel::cross-toolchain
       environment:
         AUTOCONF_TARGET: "arm-none-elf-eabi"
@@ -13,6 +19,12 @@ depends:
     #    ARCH: "arm"
     #    GCC_TARGET_ARCH: "armv8-r"
     #    GCC_LIBC: "uclibc-ng"
+
+    #    - name: devel::cross-toolchain-arm-linux-gnueabihf
+    #      use: [tools, environment]
+    #      forward: True
+
+    #    - kernel::linux-image
 
 buildScript: |
   true

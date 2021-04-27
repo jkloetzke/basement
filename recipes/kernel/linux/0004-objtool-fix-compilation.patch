@@ -13,10 +13,10 @@ diff -Nurp linux-5.7.4/tools/objtool/Makefile workspace/tools/objtool/Makefile
  include ../scripts/Makefile.include
  include ../scripts/Makefile.arch
 +include ../scripts/Makefile.pkg-config
- 
+
  # always use the host compiler
- ifneq ($(LLVM),)
-@@ -28,8 +29,8 @@ LIBSUBCMD		= $(LIBSUBCMD_OUTPUT)libsubcm
+ AR	 = $(HOSTAR)
+@@ -19,8 +20,8 @@ LIBSUBCMD		= $(LIBSUBCMD_OUTPUT)libsubcm
  OBJTOOL    := $(OUTPUT)objtool
  OBJTOOL_IN := $(OBJTOOL)-in.o
  
@@ -28,11 +28,11 @@ diff -Nurp linux-5.7.4/tools/objtool/Makefile workspace/tools/objtool/Makefile
  all: $(OBJTOOL)
  
 @@ -38,7 +39,7 @@ INCLUDES := -I$(srctree)/tools/include \
- 	    -I$(srctree)/tools/arch/$(SRCARCH)/include
- WARNINGS := $(EXTRA_WARNINGS) -Wno-switch-default -Wno-switch-enum -Wno-packed
+ 	    -I$(srctree)/tools/objtool/arch/$(SRCARCH)/include
+ WARNINGS := $(EXTRA_WARNINGS) -Wno-switch-default -Wno-switch-enum -Wno-packed -Wno-nested-externs
  CFLAGS   := -Werror $(WARNINGS) $(KBUILD_HOSTCFLAGS) -g $(INCLUDES) $(LIBELF_FLAGS)
 -LDFLAGS  += $(LIBELF_LIBS) $(LIBSUBCMD) $(KBUILD_HOSTLDFLAGS)
 +LDFLAGS  += $(KBUILD_HOSTLDFLAGS) $(LIBELF_LIBS) $(LIBSUBCMD)
- 
+
  # Allow old libelf to be used:
  elfshdr := $(shell echo '$(pound)include <libelf.h>' | $(CC) $(CFLAGS) -x c -E - | grep elf_getshdr)

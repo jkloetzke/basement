@@ -9,7 +9,7 @@ Signed-off-by: Jan Klötzke <jan@kloetzke.net>
 diff -Nurp linux-5.7.4/Makefile workspace/Makefile
 --- linux-5.7.4/Makefile	2020-06-18 14:31:08.000000000 +0200
 +++ workspace/Makefile	2020-06-23 20:26:29.127444629 +0200
-@@ -1022,11 +1022,13 @@ mod_sign_cmd = true
+@@ -1067,10 +1067,12 @@ mod_sign_cmd = true
  endif
  export mod_sign_cmd
  
@@ -18,10 +18,9 @@ diff -Nurp linux-5.7.4/Makefile workspace/Makefile
 +
 +HOST_LIBELF_FLAGS = $(call pkg-config-libs,libelf,elf) $(call pkg-config-flags,libelf)
  
- ifdef CONFIG_STACK_VALIDATION
-   has_libelf := $(call try-run,\
--		echo "int main() {}" | $(HOSTCC) -xc -o /dev/null $(HOST_LIBELF_LIBS) -,1,0)
+ has_libelf = $(call try-run,\
+-               echo "int main() {}" | $(HOSTCC) -xc -o /dev/null $(HOST_LIBELF_LIBS) -,1,0)
 +		echo "int main() {}" | $(HOSTCC) -xc -o /dev/null $(KBUILD_HOSTCFLAGS) $(KBUILD_HOSTLDFLAGS) $(HOST_LIBELF_FLAGS) -,1,0)
+ 
+ ifdef CONFIG_STACK_VALIDATION
    ifeq ($(has_libelf),1)
-     objtool_target := tools/objtool FORCE
-   else

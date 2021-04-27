@@ -11,12 +11,11 @@ depends:
       name: kernel::linux-custom-config
 
 metaEnvironment:
-    PKG_VERSION: "5.7.4"
+    PKG_VERSION: "5.11.2"
 
 checkoutSCM:
     scm: url
     url: ${KERNEL_MIRROR}/linux/kernel/v5.x/linux-${PKG_VERSION}.tar.xz
-    digestSHA1: "3b84ef2105b55549f1d0329f2522741581eea326"
     stripComponents: 1
 
 checkoutDeterministic: True
