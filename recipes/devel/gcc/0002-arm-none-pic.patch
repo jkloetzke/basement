@@ -1,13 +1,22 @@
-Introduce an arm-none-elf-eabi variant
+Introduce an arm-none-elf-eabi and aarch64-*-pic-elf variants
 
-This variant will have libgcc compiled as PIC and provide the crtstuff in a PIC
-variant too. Effectively it can be used to create (static) position independent
-executables on these platforms too.
+These variants will have libgcc compiled as PIC and provide the crtstuff in a
+PIC variant too. Effectively it can be used to create (static) position
+independent executables on these platforms too.
 
 diff -Nurp pristine/libgcc/config.host workspace/libgcc/config.host
---- pristine/libgcc/config.host	2019-01-17 13:29:13.000000000 +0100
-+++ workspace/libgcc/config.host	2021-01-13 09:09:34.030225086 +0100
-@@ -462,6 +462,10 @@ arm*-*-eabi* | arm*-*-symbianelf* | arm*
+--- pristine/libgcc/config.host	2021-04-08 13:56:29.805761640 +0200
++++ workspace/libgcc/config.host.new	2021-04-27 13:09:32.618155197 +0200
+@@ -366,6 +366,8 @@
+ 	tmake_file="${tmake_file} ${cpu_type}/t-lse t-slibgcc-libgcc"
+ 	tmake_file="${tmake_file} ${cpu_type}/t-softfp t-softfp t-crtfm"
+ 	md_unwind_header=aarch64/aarch64-unwind.h
++	tmake_file="$tmake_file t-crtstuff-pic t-libgcc-pic"
++	extra_parts="$extra_parts crtbeginS.o crtendS.o"
+ 	;;
+ aarch64*-*-freebsd*)
+ 	extra_parts="$extra_parts crtfastmath.o"
+@@ -497,6 +499,10 @@
  	tmake_file="${tmake_file} arm/t-arm arm/t-elf t-fixedpoint-gnu-prefix"
  	tm_file="$tm_file arm/bpabi-lib.h"
  	case ${host} in

@@ -9,8 +9,8 @@ depends:
     #    GCC_LIBC: "newlib"
     - name: devel::cross-toolchain
       environment:
-        AUTOCONF_TARGET: "arm-none-elf-eabi"
-        ARCH: "arm"
+        AUTOCONF_TARGET: "aarch64-none-elf"
+        ARCH: "arm64"
         GCC_TARGET_ARCH: "armv8-r"
         GCC_LIBC: "newlib"
     #- name: devel::cross-toolchain
