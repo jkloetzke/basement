@@ -1,12 +1,12 @@
 inherit: [autotools]
 
 metaEnvironment:
-    PKG_VERSION: "2.35.2"
+    PKG_VERSION: "2.37"
 
 checkoutSCM:
     scm: url
     url: ${GNU_MIRROR}/binutils/binutils-${PKG_VERSION}.tar.xz
-    digestSHA1: "2dd8d1ce34dc7b1cb2073123e30c4901221835b0"
+    digestSHA1: "e9cf391b000010d6c752771974b394c9c743c928"
     stripComponents: 1
 
 # Some parts are compiled for the host during compilation. Hence we need the
