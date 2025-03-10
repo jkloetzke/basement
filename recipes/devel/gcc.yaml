@@ -133,7 +133,8 @@ multiPackage:
                 --disable-libstdcxx                            \
                 --disable-shared                               \
                 --disable-bootstrap                            \
-                --enable-languages=c
+                --enable-languages=c                           \
+                ${GCC_MULTILIB:+"--with-multilib-list=$GCC_MULTILIB"}
             cp -a ${BOB_DEP_PATHS[devel::binutils]}/* install/
 
         packageScript: |

@@ -97,6 +97,7 @@ multiPackage:
             ARCH: "arm"
             GCC_ENABLE_LANGUAGES: "c"
             GCC_LIBC: "newlib"
+            GCC_MULTILIB: "aprofile,rmprofile"
 
     # ARMv8-A AArch64 Linux toolchain
     aarch64-linux-gnu:

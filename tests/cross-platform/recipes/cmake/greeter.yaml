@@ -30,7 +30,7 @@ multiPackage:
               forward: True
             - if: !expr |
                 "${BOB_HOST_PLATFORM}" != "msys" && "${BOB_HOST_PLATFORM}" != "win32"
-              name: devel::cross-toolchain-x86_64-linux-gnu
+              name: devel::cross-toolchain-arm-none-eabi
               use: [tools]
               forward: True
             - depends: *deps
