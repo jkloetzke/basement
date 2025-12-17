@@ -1,19 +1,19 @@
 inherit: [make, strip]
 
 metaEnvironment:
-    PKG_VERSION: "r-2025-W49"
+    PKG_VERSION: "r-2025-W50"
     PKG_LICENSE: "MIT AND GPL-3.0-only with GCC-exception-3.1 AND GPL-3.0-or-later AND GPL-2.0-only"
 
 checkoutSCM:
     - scm: url
       dir: .
       url: $GITHUB_MIRROR/L4Re/mk/archive/refs/tags/${PKG_VERSION}.tar.gz
-      digestSHA1: 4e329a85cb50514df2360cb041421dcf0229ff55
+      digestSHA1: 63828669ccdbe441c567965894938237c64ebb20
       stripComponents: 1
     - scm: url
       dir: pkg/l4re-core
       url: $GITHUB_MIRROR/L4Re/l4re-core/archive/refs/tags/${PKG_VERSION}.tar.gz
-      digestSHA1: 91e908bc24b90bd481fe48309d34cbb36a43197d
+      digestSHA1: 05265684049f9ba9c62a0d4a1fe06ff79494a8d5
       stripComponents: 1
 
 buildTools: [host-toolchain, target-toolchain, flex, bison]
